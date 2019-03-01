@@ -5,6 +5,9 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import jdk.nashorn.internal.objects.annotations.Function;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,29 +27,26 @@ public class Lecture10 {
   @Test
   public void withoutFlatMap() throws Exception {
 //    [Mariam, Alex, Ismail, John, Alesha, Andre, Susy, Ali]
-
-    List<String> names = Lists.newArrayList();
-
-    for(List<String> listOfNames : arrayListOfNames) {
-      for(String name : listOfNames) {
+    List<String> names = new ArrayList<String>();
+    for(List<String> namesList : arrayListOfNames){
+      for(String name : namesList) {
         names.add(name);
       }
     }
-
     System.out.println(names);
 
+//    arrayListOfNames.stream().reduce((a,b) -> a.add(b.get(0)));
+//
+//                          or
+//
+//    arrayListOfNames.stream().reduce(List::);
   }
 
   @Test
   public void withFlatMap() throws Exception {
 //   [Mariam, Alex, Ismail, John, Alesha, Andre, Susy, Ali]
-
-    List<String> names = arrayListOfNames.stream()
-        .flatMap(List::stream)
-        .collect(Collectors.toList());
-
+    List<String> names = arrayListOfNames.stream().flatMap(List::stream).collect(Collectors.toList());
     System.out.println(names);
-
   }
 
 }
